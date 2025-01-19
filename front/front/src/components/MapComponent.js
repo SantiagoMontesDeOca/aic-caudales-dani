@@ -21,12 +21,12 @@ const stations = [
   { name: "P L PAINEMILLA", lat: -39.194493, lon: -70.180192 },
   { name: "LINDERO ATRAVESADO", lat: -38.749474, lon: -68.249677 },
   { name: "CHOS MALAL", lat: -37.406389, lon: -70.229167 },
-  { name: "ANDACOLLO ( PUENTE )", lat: -37.183480, lon: -70.677544 },
+  { name: "ANDACOLLO (PUENTE)", lat: -37.183480, lon: -70.677544 },
   { name: "RAHUECO", lat: -37.355418, lon: -70.454841 },
   { name: "BALSA HUITRIN (SSRRHH)", lat: -37.667532, lon: -69.977555 },
   { name: "CHOS MALAL AEROP", lat: 0.000000, lon: 0.000000 },
   { name: "COMPENSADOR EL CHANAR", lat: -38.599587, lon: -68.389558 },
-  { name: "VARVARCO ( PUENTE )", lat: -36.857432, lon: -70.818350 },
+  { name: "VARVARCO (PUENTE)", lat: -36.857432, lon: -70.818350 },
   { name: "NEHUEN", lat: -36.801861, lon: -70.723639 },
   { name: "LA HIGUERA", lat: -38.587020, lon: -69.362968 },
   { name: "CIPOLLETTI TOMA", lat: -38.929437, lon: -68.040957 },
@@ -74,10 +74,54 @@ const stations = [
   { name: "AÑIHUERAQUI", lat: -39.427482, lon: -71.421651 },
   { name: "NACIENTES ARROYO MALALCO", lat: -39.253250, lon: -71.365533 },
   { name: "SALIDA LAGO ÑORQUINCO", lat: -39.143969, lon: -71.236947 },
-  { name: "LAGO ÑORQUINCO ( TMD )", lat: -39.121041, lon: -71.318795 },
+  { name: "LAGO ÑORQUINCO (TMD)", lat: -39.121041, lon: -71.318795 },
   { name: "BATEA MAHUIDA ABAJO", lat: -38.831000, lon: -71.204000 },
   { name: "CERRO LITRAN", lat: -38.787333, lon: -70.815000 },
-  { name: "LITRAN ABAJO (Nacientes rio Litran)", lat: -38.750250, lon: -70.871917 },
+  { name: "LITRAN ABAJO (Nacientes río Litran)", lat: -38.750250, lon: -70.871917 },
   { name: "CERRO CASA QUILA (1600)", lat: -38.965939, lon: -71.405997 },
   { name: "CERRO CASA QUILA (1800)", lat: -38.962833, lon: -71.412083 },
-  { name: "LAS COLORADAS", lat: -39.552369, lon
+  { name: "LAS COLORADAS", lat: -39.552369, lon: -70.589999 },
+  { name: "NACIENTES DEL CATAN LIL", lat: -39.035000, lon: -70.726250 },
+  { name: "EA. CASA DE LATA", lat: -39.844366, lon: -71.177945 },
+  { name: "PUESTO COLLUNCO", lat: -40.004493, lon: -71.075370 },
+  { name: "EA. COLLUN CO", lat: -39.964667, lon: -71.199000 },
+  { name: "LAGO HUECHULAUFQUEN (PN)", lat: -39.748250, lon: -71.476333 },
+  { name: "PUESTO ANTIAO", lat: -39.750403, lon: -71.625394 },
+  { name: "CERRO HUICUIFA", lat: -39.765389, lon: -71.608297 },
+  { name: "PUENTE R. N. 234 (SSRRHH)", lat: -40.057616, lon: -71.076908 },
+  { name: "SAN CARLOS DE BARILOCHE", lat: -41.132293, lon: -71.304642 },
+  { name: "BAHIA LOPEZ", lat: -41.074410, lon: -71.568569 },
+  { name: "LAS PIEDRITAS", lat: -40.763253, lon: -71.640387 },
+  { name: "RIO BONITO", lat: -40.789972, lon: -71.598495 },
+  { name: "VILLA LA ANGOSTURA SEGUREL", lat: -40.782777, lon: -71.656518 },
+  { name: "CERRO NEVADO", lat: -40.970833, lon: -71.712667 },
+  { name: "PUESTO EL RINCON", lat: -40.725344, lon: -71.804198 },
+  { name: "CERRO MIRADOR", lat: -40.718832, lon: -71.934903 }
+];
+
+const MapComponent = () => {
+  return (
+    <MapContainer center={[-40.0, -70.0]} zoom={6} style={{ height: '100vh' }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {stations.map((station, index) => (
+        <Marker
+          key={index}
+          position={[station.lat, station.lon]}
+          icon={new L.Icon({
+            iconUrl: require('leaflet/dist/images/marker-icon.png'),
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41],
+          })}
+        >
+          <Popup>{station.name}</Popup>
+        </Marker>
+      ))}
+    </MapContainer>
+  );
+};
+
+export default MapComponent;
