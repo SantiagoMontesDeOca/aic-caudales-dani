@@ -19,14 +19,13 @@ class DataGatherer:
         return datetime.strptime(cleaned_date, "%d de %B de %Y").date()
 
     def parse(self, html_content):
-        # sections = Sections()
         soup = BeautifulSoup(html_content, 'html.parser')
         table = soup.find(id="body_TablaCaudales")
 
         # Get the last update date
         last_update = self._build_date(soup.find(id="body_LabelFecha").get_text())
         
-        #dates handlind
+        # Dates handling
         trs = table.find_all("tr")
         dates_td_str = [td.get_text() for td in trs[1].find_all("td")]
         dates = [datetime.strptime(date, "%d/%m/%Y").date() for date in dates_td_str]
@@ -36,10 +35,10 @@ class DataGatherer:
             tr_n = trs[i]
             tr_n_plus_1 = trs[i + 1]
             
-            section = self._build_section(tr_n, tr_n_plus_1, dates, order=(i-2)/2)
+            section = self._build_section(tr_n, tr_n_plus_1, dates, order=(i-2)//2)
             sections.append(section)
 
-        return Sections(version="v1.1.0", last_update=last_update, sections=sections)    
+        return Sections(version="v1.1.0", last_update=last_update, sections=sections)
 
     def _build_section(self, tr1, tr2, dates, order):
         section = Section()
@@ -53,8 +52,10 @@ class DataGatherer:
         # Dispensed level
         dispensed = tr1.find("td", class_="ErogadoCaudalesFila").get_text().strip()
         levels.append(Level("dispensed", dates[0], dispensed=dispensed))
+        
         tds1 = tr1.find_all("td")
         tds2 = tr2.find_all("td")
+        
         for i in range(len(tds2)-1):
             max = int(tds1[i+2].get_text().strip())
             min = int(tds2[i].get_text().strip())
