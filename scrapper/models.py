@@ -16,6 +16,8 @@ class Section:
     title: str = ""
     order: int = 0
     levels: List[Level] = field(default_factory=list)
+    latitude: Optional[float] = None  # Agregado: latitud de la estación
+    longitude: Optional[float] = None  # Agregado: longitud de la estación
 
 @dataclass
 class Sections:
