@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import RiverSection from './components/RiverSection';
+import MapComponent from './components/MapComponent'; // Asegúrate de importar MapComponent
 
 function App() {
   const [data, setData] = useState(null);
@@ -32,6 +33,10 @@ function App() {
         <h1 className="text-4xl font-bold text-white mb-2">AIC - Caudales programados</h1>
         <p className="text-gray-300 text-sm">Todos los valores estan expresados en m³/s</p>
       </div>
+
+      {/* Mostrar el Mapa con las Estaciones */}
+      <MapComponent /> 
+
       {orderedSections.map((section, index) => (
         <RiverSection key={index} section={section} minMaxLevels={minMaxLevels[section.id]} />
       ))}
